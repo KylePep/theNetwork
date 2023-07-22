@@ -1,3 +1,4 @@
+import { useAttrs } from "vue"
 import { AppState } from "../AppState.js"
 import { Post } from "../models/Post.js"
 import { logger } from "../utils/Logger.js"
@@ -29,6 +30,31 @@ class PostService {
     AppState.posts.unshift(new Post(res.data))
   }
 
+  async likeButton(postId) {
+    const res = await api.post(`api/posts/${postId}/like`)
+    const postIndex = AppState.posts.findIndex(p => p.id == postId)
+    logger.log('[Data]', res.data, '[index]', postIndex)
+    AppState.posts.splice(postIndex, 1, new Post(res.data))
+    // AppState.posts[postIndex].
+  }
+
+  async removePostById(postId) {
+    const res = await api.delete(`api/posts/${postId}`)
+    const postIndex = AppState.posts.findIndex(p => p.id == postId)
+    logger.log('[Data]', res.data, '[index]', postIndex)
+    AppState.posts.splice(postIndex, 1)
+  }
+
+  async getPostsByQuery(query) {
+    const res = await api.get(`api/posts/?query=${query}`)
+    logger.log('[Query Results]', res.data, '[query]', query)
+    AppState.posts = res.data.posts.map(postPojo => new Post(postPojo))
+    AppState.newer = res.data.newer
+    AppState.older = res.data.older
+    AppState.page = res.data.page
+    AppState.totalPages = res.data.totalPages
+    window.location.href = `#/search/${query}`
+  }
 
 }
 export const postService = new PostService

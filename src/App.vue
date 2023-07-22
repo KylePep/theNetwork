@@ -2,16 +2,15 @@
   <header>
     <Navbar />
   </header>
-  <main class="container-fluid">
+  <main>
     <section class="row">
-
       <ProfileDetails />
 
       <div class="col-7">
         <router-view />
       </div>
 
-      <div class="col-2 d-flex flex-column justify-content-center align-items-center bg-white">
+      <div class="col-2 d-flex flex-column  p-0  bg-white">
         <section v-for="ad in ads" :key="ad" class="row">
           <AdCard :adProp="ad" />
         </section>
@@ -26,9 +25,10 @@ import { computed, onMounted } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import AdCard from "./components/AdCard.vue"
-import ProfileDetails from "./components/ProfileDetails.vue"
 import Pop from "./utils/Pop.js"
 import { adsService } from "./services/AdsService.js"
+import ProfileDetails from "./components/ProfileDetails.vue"
+
 
 
 export default {
@@ -51,7 +51,7 @@ export default {
       activeProfile: computed(() => AppState.activeProfile)
     }
   },
-  components: { Navbar, AdCard }
+  components: { Navbar, AdCard, ProfileDetails }
 }
 </script>
 <style lang="scss">

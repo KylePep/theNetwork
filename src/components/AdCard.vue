@@ -1,13 +1,9 @@
 <template>
-  <div class="my-3">
-    <img class="img-fluid" :src="adProp.tall" :alt="adProp.title">
-  </div>
+  <img class="img-fluid" :src="adProp.tall" :alt="adProp.title">
 </template>
 
 
 <script>
-import { computed } from "vue";
-import { AppState } from "../AppState.js";
 import { Ad } from "../models/Ad.js";
 
 export default {

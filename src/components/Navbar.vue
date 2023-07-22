@@ -6,6 +6,13 @@
         <h1>The Network</h1>
       </div>
     </router-link>
+
+    <!-- <router-link :to="{name: 'Search', params: {query: editable.value.query}}"> -->
+    <form @submit.prevent="getPostsByQuery()" class="bg-light py-1 px-2 ">
+      <input v-model="editable.query" type="text" placeholder="Search" minlength="3" maxlength="100">
+      <button class="mdi mdi-magnify" type="submit"></button>
+    </form>
+    <!-- </router-link> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,10 +32,25 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import Pop from "../utils/Pop.js";
 import Login from './Login.vue';
+import { postService } from "../services/PostService.js";
 export default {
   setup() {
-    return {}
+    const editable = ref({})
+    return {
+      editable,
+      async getPostsByQuery() {
+        try {
+          const query = editable.value.query
+          postService.getPostsByQuery(query)
+          editable.value = {}
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      }
+    }
   },
   components: { Login }
 }

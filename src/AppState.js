@@ -17,4 +17,5 @@ export const AppState = reactive({
   activeProfile: null,
   /** @type {import('./models/Post.js').Post} */
   activePost: null,
+  query: null
 })

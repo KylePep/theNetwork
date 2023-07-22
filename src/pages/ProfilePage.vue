@@ -83,6 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 .postField {
-  height: 65vh;
+  height: 80vh;
 }
 </style>
