@@ -1,6 +1,6 @@
 <template>
   <div v-for="ad in ads" :key="ad" class="p-0">
-    <a :href="adlink">
+    <a :href="`https://${ad.linkURL}`">
       <img class="img-fluid p-0" :src="ad.tall" :alt="ad.title">
     </a>
   </div>
@@ -19,7 +19,7 @@ export default {
   setup() {
     return {
       ads: computed(() => AppState.ads),
-      adlink: computed(() => `https://boisecodeworks.com`),
+      // adlink: computed(() => `https://boisecodeworks.com`),
 
     }
   }
