@@ -45,6 +45,24 @@ class PostService {
     AppState.posts.splice(postIndex, 1)
   }
 
+  editFormById(postId) {
+    const postIndex = AppState.posts.find(p => p.id == postId)
+    if (postIndex.edit == false) {
+      postIndex.edit = true
+      logger.log('[Edit Post]')
+      return
+    } else {
+      postIndex.edit = false
+    }
+  }
+
+  async editPostById(postId, formData) {
+    const res = await api.put(`api/posts/${postId}`, formData)
+    const postIndex = AppState.posts.findIndex(p => p.id == postId)
+    logger.log('[Data]', res.data, '[index]', postIndex)
+    AppState.posts.splice(postIndex, 1, new Post(res.data))
+  }
+
   async getPostsByQuery(query) {
     const res = await api.get(`api/posts/?query=${query}`)
     logger.log('[Query Results]', res.data, '[query]', query)

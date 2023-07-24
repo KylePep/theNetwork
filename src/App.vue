@@ -1,21 +1,21 @@
 <template>
   <header>
-    <Navbar />
+    <section class="row">
+
+      <Navbar />
+    </section>
   </header>
   <main>
     <section class="row">
       <ProfileDetails />
 
-      <div class="col-7">
+      <div class="col-7 bg-secondary">
         <router-view />
       </div>
 
-      <div class="col-2 d-flex flex-column  p-0  bg-white">
-        <section v-for="ad in ads" :key="ad" class="row">
-          <AdCard :adProp="ad" />
-        </section>
+      <div class="col-2 bg-white p-0">
+        <AdCard />
       </div>
-
     </section>
   </main>
 </template>
@@ -47,7 +47,6 @@ export default {
     return {
       appState: computed(() => AppState),
       account: computed(() => AppState.account),
-      ads: computed(() => AppState.ads),
       activeProfile: computed(() => AppState.activeProfile)
     }
   },

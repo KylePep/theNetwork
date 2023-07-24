@@ -1,17 +1,13 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-header px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <!-- <img alt="logo" src="../assets/img/cw-logo.png" height="45" /> -->
         <h1>The Network</h1>
       </div>
     </router-link>
 
     <!-- <router-link :to="{name: 'Search', params: {query: editable.value.query}}"> -->
-    <form @submit.prevent="getPostsByQuery()" class="bg-light py-1 px-2 ">
-      <input v-model="editable.query" type="text" placeholder="Search" minlength="3" maxlength="100">
-      <button class="mdi mdi-magnify" type="submit"></button>
-    </form>
+
     <!-- </router-link> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,14 +28,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Pop from "../utils/Pop.js";
 import Login from './Login.vue';
 import { postService } from "../services/PostService.js";
+import { AppState } from "../AppState.js";
 export default {
   setup() {
     const editable = ref({})
     return {
+      coverImg: computed(() => `url(${AppState.activeProfile?.coverImg})`),
       editable,
       async getPostsByQuery() {
         try {
@@ -59,6 +57,22 @@ export default {
 <style scoped>
 a:hover {
   text-decoration: none;
+}
+
+h1 {
+  font-family: 'Bungee Spice', cursive;
+  color: white;
+  text-shadow: -2px 2px 0 #000,
+    2px 2px 0 #000,
+    2px -2px 0 #000,
+    -2px -2px 0 #000;
+}
+
+.bg-header {
+  background-image: v-bind(coverImg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .nav-link {

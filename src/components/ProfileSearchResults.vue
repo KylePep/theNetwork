@@ -1,8 +1,18 @@
 <template>
   <div class="row">
-    <div class="col-9 m-auto my-3 d-flex justify-content-between">
+    <div class="col-11 m-auto my-3 d-flex justify-content-between">
       <button @click="changePage(newer)" class="btn btn-secondary" :disabled="!newer">Newer</button>
-      <div>{{ page }} | {{ totalPages }}</div>
+
+      <div class="d-flex flex-column align-items-center">
+        <form @submit.prevent="getPostsByQuery()" class="bg-light rounded py-1 px-2 ">
+          <input v-model="editable.query" class="border border-none" type="text" placeholder="Search" minlength="3"
+            maxlength="100">
+          <button class="mdi mdi-magnify btn btn-light" type="submit"></button>
+        </form>
+
+        <div>{{ page }} | {{ totalPages }}</div>
+      </div>
+
       <button @click="changePage(older)" class="btn btn-secondary" :disabled="!older">Older</button>
     </div>
   </div>
@@ -23,7 +33,7 @@
 
 
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { AppState } from "../AppState.js";
 import { postService } from "../services/PostService.js";
 import Pop from "../utils/Pop.js";
@@ -33,6 +43,8 @@ import { profileService } from "../services/ProfileService.js";
 
 export default {
   setup() {
+    const editable = ref({})
+
     return {
       posts: computed(() => AppState.posts),
       activeProfile: computed(() => AppState.activeProfile),
@@ -40,6 +52,17 @@ export default {
       older: computed(() => AppState.older),
       page: computed(() => AppState.page),
       totalPages: computed(() => AppState.totalPages),
+      editable,
+
+      async getPostsByQuery() {
+        try {
+          const query = editable.value.query
+          postService.getPostsByQuery(query)
+          editable.value = {}
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      },
       async changePage(url) {
         try {
           await postService.changePage(url);

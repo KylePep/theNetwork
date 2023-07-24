@@ -1,4 +1,7 @@
 <template>
+  <section v-if="postProp.edit == true" class="row fs-1">
+    <EditPost :editProp="postProp" />
+  </section>
   <section class="row">
     <div class="col-4">
       <router-link :to="{ name: 'Profile', params: { profileId: postProp.creator.id } }"
@@ -15,14 +18,14 @@
 
     <div class="col-2">
       <div v-if="account.id == postProp.creatorId" class="d-flex flex-row justify-content-between">
-        <i class="mdi mdi-pencil text-primary fs-5"></i>
-        <i @click="removePostById(postProp.id)" class="mdi mdi-delete text-danger fs-5"></i>
+        <i @click="editFormById(postProp.id)" class=" selectable mdi mdi-pencil text-primary fs-5"></i>
+        <i @click="removePostById(postProp.id)" class=" selectable mdi mdi-delete text-danger fs-5"></i>
       </div>
     </div>
 
   </section>
   <section class="row ">
-    <div class="col-10 my-3 m-auto fs-5">{{ postProp.body }}</div>
+    <h6 class="col-11 my-3 m-auto">{{ postProp.body }}</h6>
   </section>
   <section class="row">
     <img class="postImage" :src="postProp.imgUrl" alt="">
@@ -33,8 +36,11 @@
         <i v-if="postProp.likeIds.includes(account.id)" class="mdi mdi-sword-cross fs-3"> </i>
         <i v-else class="mdi mdi-sword fs-3"> </i>
       </div>
+      <div v-else>
+        <i class="mdi mdi-shield-sword fs-3"></i>
+      </div>
       <div class="text-end fs-3">
-        {{ postProp.likes.length }}
+        :{{ postProp.likes.length }}
       </div>
     </div>
   </section>
@@ -80,6 +86,9 @@ export default {
         } catch (error) {
           Pop.error(error.message)
         }
+      },
+      editFormById(postId) {
+        postService.editFormById(postId)
       }
     }
 
@@ -89,6 +98,10 @@ export default {
 
 
 <style lang="scss" scoped>
+h6 {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
 .avatar {
   height: 10vh;
   width: 10vh;

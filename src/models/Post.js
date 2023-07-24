@@ -8,6 +8,7 @@ export class Post {
     this.createdAt = data.createdAt
     this.creator = data.creator
     this.likes = data.likes
+    this.edit = false
   }
 }
 
