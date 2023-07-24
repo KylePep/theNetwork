@@ -40,6 +40,10 @@
             <input class="form-control" type="url" id="resume" minlength="3" maxlength="100" v-model="editable.resume">
           </div>
           <div class="mb-2">
+            <label for="resume">Class</label>
+            <input class="form-control" type="text" id="class" minlength="3" maxlength="100" v-model="editable.class">
+          </div>
+          <div class="mb-2">
             <label for="graduated">Graduated:</label>
             <input class="form-check-input" type="checkbox" id="graduated" minlength="3" maxlength="100"
               v-model="editable.graduated">

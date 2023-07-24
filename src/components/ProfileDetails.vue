@@ -2,7 +2,9 @@
   <div v-if="activeProfile"
     class="col-3 d-flex flex-column align-items-center justify-content-between card elevation-5 profileCoverImg">
     <h1 class="fs-3 mt-5 mb-3 px-2 text-center glassBackground rounded">{{ activeProfile.name }}</h1>
-    <div v-if="activeProfile.graduated" class="text-center"> <i class="mdi mdi-school fs-1 "></i></div>
+    <div v-if="activeProfile.graduated" class="text-center"> <i class="mdi mdi-school fs-1 "></i>
+    </div>
+
 
     <router-link :to="{ name: 'Profile', params: { profileId: AppState.activeProfile?.id } }"
       @click="getActiveProfilebyId(AppState.activeProfile?.id)">
@@ -11,6 +13,9 @@
 
     <div class="glassBackground rounded p-3 d-flex flex-column align-items-center flex-grow-1">
       <h2>-Profile Details-</h2>
+      <div>
+        Class: {{ activeProfile?.class }}
+      </div>
       <a v-if="activeProfile.github" :href="activeProfile.github" class="fs-6 mb-2 selectable"> <i
           class="fs-3 mdi mdi-github"></i>
         git/{{

@@ -12,6 +12,7 @@
 
     <div class="col-6">
       <div> {{ postProp.creator.name }}</div>
+      <div> {{ postProp.creator.class }}</div>
       <div> Posted:{{ new Date(postProp.createdAt).toLocaleDateString() }}</div>
       <div v-if="postProp.creator.graduated"> <i class="mdi mdi-school"></i></div>
     </div>

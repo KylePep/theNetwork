@@ -11,6 +11,7 @@ export class Profile {
     this.linkedin = data.linkedin
     this.graduated = data.graduated
     this.createdAt = data.createdAt
+    this.class = data.class
   }
 }
 
